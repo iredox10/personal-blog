@@ -31,8 +31,8 @@ export const delete_category = async (req,res)=>{
 
 export const get_category = async (req,res)=>{
     try{
-        const category = await Category.findOne({slug:req.params.slug})
-        res.json(category)
+        const categoryBlogs = await Category.findOne({slug:req.params.slug}).populate('blogs')
+        res.json(categoryBlogs)
     }catch(err){
         res.json(err)
     }

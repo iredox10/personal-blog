@@ -15,11 +15,19 @@ const blog = new mongoose.Schema({
         type: String,
         required: true
     },
-    category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'category',
-    }
-}, {timestamp: true})
+    author:{
+        type: String,
+        required: true,
+    },
+    category:{
+        type: String,
+        required: true,
+    },
+    // category: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'category',
+    // }
+}, {timestamps: true})
 
 blog.pre('save', function(){
     if(this.title){

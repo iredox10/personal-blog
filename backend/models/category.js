@@ -18,7 +18,8 @@ const category = new mongoose.Schema({
     blogs: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'blog',
-    }]
+    }],
+    logo: String
 },{timestamp: true})
 
 category.pre('save', function(){
