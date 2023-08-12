@@ -1,9 +1,21 @@
 import Blog from "../models/blogs.js"
 import Category from "../models/category.js"
+import cloudinary from "../utils/cloudinary.js"
+
 
 export const create_category = async (req,res)=>{
+    const imageStr = req.body.logo  
+        const uploadedResponse = await cloudinary.uploader.upload(imageStr,{
+            upload_preset: 'blog_images'
+        })
     try{
-        const category = await Category.create(req.body)
+        const category = await Category.create({
+            name: req.body.name,
+            shortName: req.body.shortName,
+            color: req.body.color,
+            desc: req.body.desc,
+            logo: uploadedResponse.secure_url
+        })
         res.json(category)
     }catch(err){
         res.json(err)

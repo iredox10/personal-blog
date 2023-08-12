@@ -17,7 +17,7 @@ export const create_blog = async (req,res)=>{
             image: uploadedResponse.secure_url,
             blog: req.body.blog,
             author: req.body.author,
-            category: req.body.category
+            category: req.body.category,
             // category: req.body.category._id
         })
         category.blogs.push(blog._id)

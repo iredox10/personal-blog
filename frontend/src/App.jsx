@@ -4,6 +4,7 @@ import './App.css'
 import { Admin } from './pages/Admin'
 import { AdminBlogs } from './pages/AdminBlogs'
 import BlogPage from './pages/BlogPage'
+import EditBlog from './pages/EditBlog'
 
 function App() {
 
@@ -14,7 +15,9 @@ function App() {
         <Route path='/blog/:slug' element={<BlogPage />} />
 
         <Route path="/admin" element={<Admin />} />
-        <Route path="/admin-blogs/:slug" element={<AdminBlogs />} />
+        <Route path="/category-blogs/:slug" element={<AdminBlogs />} />
+        <Route path="/edit-blogs/:slug" element={<EditBlog />} />
+
       </Routes>
     </Router>
   )

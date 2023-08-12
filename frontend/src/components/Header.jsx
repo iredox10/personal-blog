@@ -3,9 +3,9 @@ import logo from '../assets/itruth-logo.png'
 export const Header = () => {
   return (
     <div className='shadow-lg md:p-2 md:flex justify-between items-center'>
-        <div>
+        <Link to={'/'}>
         <img src={logo} alt="logo" />
-        </div>
+        </Link>
         <nav className='flex gap-2'>
             <Link to="/" className='text-white font-bold capitalize'>Home</Link>
             <Link to="/" className='text-white font-bold capitalize'>Articles</Link>
