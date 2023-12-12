@@ -17,10 +17,11 @@ export const Admin = () => {
   const [error, setError] = useState("");
   const [previewSource, setPreviewSource] = useState("");
   const [edit, setEdit] = useState(false);
-  const [editCategoryName, setEditCategory] = useState(null);
+  const [editCategory, setEditCategory] = useState(null);
   const [addCategory, SetAddCategory] = useState(false);
   const [model, setModel] = useState(false);
   const [categories, setCategories] = useState(null);
+
   // const {
   //   data: categories,
   //   isPending,
@@ -28,14 +29,14 @@ export const Admin = () => {
   // } = UseFetch(`${path}/get-categories`);
 
   useEffect(() => {
-    if (editCategoryName) {
-      setName(editCategoryName.name);
-      setShortName(editCategoryName.shortName);
-      setDesc(editCategoryName.desc);
-      setColor(editCategoryName.color);
+    if (editCategory) {
+      setName(editCategory.name);
+      setShortName(editCategory.shortName);
+      setDesc(editCategory.desc);
+      setColor(editCategory.color);
       console.log("edit again");
     }
-  }, [editCategoryName]);
+  }, [editCategory]);
 
   useEffect(() => {
     const fetch = async () => {
@@ -103,7 +104,7 @@ export const Admin = () => {
         shortName,
       });
       const categories = await axios(`${path}/get-categories`);
-      setCategories(categories.data)
+      setCategories(categories.data);
       setEditCategory(res.data);
       setEdit(false);
       console.log(res.data);
@@ -133,22 +134,24 @@ export const Admin = () => {
               categories.map((category) => (
                 <div
                   key={categories._id}
-                  className=" bg-dark-color/70 capitalize text-secondary-color p-2">
-                  <div className="p-2">
+                  className=" bg-dark-color/70 capitalize text-secondary-color">
+                  <div style={{backgroundColor: `${category.color}`}}  className="p-2 ">
                     <img src={categories.logo} alt="blog image" />
                   </div>
+                  <div className="p-2">
                   <p className="flex justify-between items-center capitalize my-2">
-                    <span className="font-bold">{category.name}</span>
+                    <span className="font-bold ">{category.name}</span>
                     <span>{category.shortName}</span>
                   </p>
                   <p className="my-2 text-sm">{category.desc}</p>
                   <p className="capitalize text-white">
-                    <div
+                    {/* <div
                       style={{ backgroundColor: `${category.color}` }}
                       className="">
                       {category.color}
-                    </div>
+                    </div> */}
                   </p>
+                  </div>
                   <div className="flex my-3 gap-3">
                     <Link
                       to={`/category-blogs/${category.slug}`}
@@ -227,7 +230,7 @@ export const Admin = () => {
                                   onchange={(e) => setName(e.target.value)}
                                   labelFor={"name"}
                                   labelName={"name"}
-                                  value={editCategoryName && name}
+                                  value={editCategory && name}
                                 />
                                 <FormInput
                                   type={"text"}
@@ -236,7 +239,7 @@ export const Admin = () => {
                                   onchange={(e) => setShortName(e.target.value)}
                                   labelFor={"shortName"}
                                   labelName={"shortName"}
-                                  value={editCategoryName && shortName}
+                                  value={editCategory && shortName}
                                 />
                                 <FormInput
                                   type={"text"}
@@ -245,7 +248,7 @@ export const Admin = () => {
                                   onchange={(e) => setDesc(e.target.value)}
                                   labelFor={"desc"}
                                   labelName={"desc"}
-                                  value={editCategoryName && desc}
+                                  value={editCategory && desc}
                                 />
                                 <FormInput
                                   type={"file"}
@@ -262,7 +265,7 @@ export const Admin = () => {
                                   onchange={(e) => setColor(e.target.value)}
                                   labelFor={"color"}
                                   labelName={"color"}
-                                  value={editCategoryName && color}
+                                  value={editCategory && color}
                                 />
                               </div>
                               {previewSource && (

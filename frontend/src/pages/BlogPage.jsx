@@ -5,6 +5,8 @@ import { Header } from '../components/Header'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import remarkMdx from 'remark-mdx'
+import { Comment } from '../components/Comment'
+import { CommentList } from '../components/CommentList'
 
 
 const BlogPage = () => {
@@ -26,32 +28,46 @@ const BlogPage = () => {
   const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')} ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     return formattedDate
   }
-  return(
-    <div className='min-w-full '>
+  return (
+    <div className="min-w-full ">
       <Header />
-        {blog && 
-      <div className='px-4 md:px-36 py-5'>
-        <h1 className='text-white capitalize font-bold text-2xl md:text-5xl'>{blog.title}</h1>
-        <div className='flex justify-between my-5'>
-          <p className='capitalize font-light italic text-gray-300 md:text-xl'>written by: <span className='text-white font-semibold'>{blog.author}</span></p>
-          <p className='capitalize font-light italic text-gray-300 md:text-xl'>publish on: <span className='text-white font-semibold'>{date()}</span></p>
-        </div>
-        <div className='h-[30vh]  '>
-          <img src={blog.image} alt="blog image" className='h-full w-full object-cover' />
-        </div>
-        <div className='prose text-white min-w-full '>
-          <ReactMarkdown className='min-w-full leading-8' remarkPlugins={[remarkGfm,remarkMdx]} >{blog.blog}</ReactMarkdown>
-        </div>
-      </div>
-        }
-        <div className='px-4 md:px-36 my-5'>
-          <div className='relative'>
-            <textarea name="comment" id="comment" cols="30" rows="5" className='bg-dark-color/80 text-secondary-color p-2'></textarea>
-            <button className='absolute bottom-[-3rem] left-0 bg-yellow hover:bg-yellow/40 px-4 py-2'>Comment</button>
+      {blog && (
+        <div className="px-4 md:px-36 py-5">
+          <h1 className="text-white capitalize font-bold text-2xl md:text-5xl">
+            {blog.title}
+          </h1>
+          <div className="flex justify-between my-5">
+            <p className="capitalize font-light italic text-gray-300 md:text-xl">
+              written by:{" "}
+              <span className="text-white font-semibold">{blog.author}</span>
+            </p>
+            <p className="capitalize font-light italic text-gray-300 md:text-xl">
+              publish on:{" "}
+              <span className="text-white font-semibold">{date()}</span>
+            </p>
+          </div>
+          <div className="h-[30vh]  ">
+            <img
+              src={blog.image}
+              alt="blog image"
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="prose text-white min-w-full ">
+            <ReactMarkdown
+              className="min-w-full leading-8"
+              remarkPlugins={[remarkGfm, remarkMdx]}>
+              {blog.blog}
+            </ReactMarkdown>
           </div>
         </div>
+      )}
+      <div className='flex flex-col'>
+        <Comment />
+        <CommentList />
+      </div>
     </div>
-  )
+  );
 }
 
 export default BlogPage
