@@ -7,9 +7,12 @@ import BlogPage from './pages/BlogPage'
 import EditBlog from './pages/EditBlog'
 import { Login } from './pages/Login'
 import { Register } from './pages/Register'
+import { UseAuthContext } from './hooks/useAuthContext'
 
 function App() {
 
+  const {state} = UseAuthContext()
+  console.log(state.user)
   return (
     <Router>
       <Routes>

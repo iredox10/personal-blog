@@ -6,8 +6,13 @@ import { Header } from "../components/Header";
 import path from "../../utils/path";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export const Login = () => {
+
+  const {dispatch} = useContext(AuthContext)
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -25,10 +30,14 @@ export const Login = () => {
         username,
         password,
       });
-      if (res.data.user.isAdmin) {
-        navigate("/admin");
-      }
-      navigate("/");
+      
+        if (res.data.user.isAdmin ) {
+          navigate("/admin");
+        }else{
+          navigate(-1);
+        }
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      dispatch({ type: "LOGIN", payload: res.data.user });
     } catch (err) {
       setErrMsg(err.response.data);
     }

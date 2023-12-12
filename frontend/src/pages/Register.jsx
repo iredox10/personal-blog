@@ -7,8 +7,11 @@ import FormBtn from '../components/FormBtn';
 import path from '../../utils/path';
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
+import { UseAuthContext } from '../hooks/useAuthContext';
 
 export const Register = () => {
+
+  const {dispatch} = UseAuthContext()
 
     const [fullName, setFullName] = useState('')
     const [username, setUsername] = useState('')
@@ -31,7 +34,10 @@ export const Register = () => {
       try {
         const res = await axios.post(`${path}/user/sign-up`, {username,fullName,password})
         console.log(res.data)
-        res.status == 201 && navigate('/')
+        if(res.status == 201) {
+          dispatch({type: 'login', payload: JSON.stringify(res.data.user)})
+          navigate('/')
+        } 
       } catch (err) {
         console.log(err)
       }

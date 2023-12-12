@@ -7,15 +7,15 @@ import remarkGfm from 'remark-gfm'
 import remarkMdx from 'remark-mdx'
 import { Comment } from '../components/Comment'
 import { CommentList } from '../components/CommentList'
+import { UseAuthContext } from '../hooks/useAuthContext'
 
 
 const BlogPage = () => {
   const {slug} = useParams()
   const {data:blog,isPending,error} = UseFetch(`${path}/blog/get-blog/${slug}`)
-  console.log(blog);
+  // console.log(blog)
   const date = () =>{
     const dateObject = new Date(blog.createdAt)
-
   // Step 2: Extract the components of the date
   const year = dateObject.getFullYear();
   const month = dateObject.getMonth() + 1; // Month starts from 0 (January)
@@ -28,6 +28,10 @@ const BlogPage = () => {
   const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')} ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     return formattedDate
   }
+
+  const {state} = UseAuthContext()
+  const user = state.user
+
   return (
     <div className="min-w-full ">
       <Header />
@@ -62,10 +66,12 @@ const BlogPage = () => {
           </div>
         </div>
       )}
+        {blog && 
       <div className='flex flex-col'>
-        <Comment />
-        <CommentList />
+        <Comment user={user} blog={blog}/>
+        <CommentList user={user} blog={blog}/>
       </div>
+        }
     </div>
   );
 }
