@@ -5,9 +5,9 @@ const blogRouter = express.Router()
 
 blogRouter.post('/create-blog/:slug', controller.create_blog)
 
-blogRouter.patch('/update-blog/:slug', controller.update_blog)
+blogRouter.patch('/edit-blog/:slug', controller.update_blog)
 
-blogRouter.delete('/delete-blog/:slug/:cSlug', controller.delete_blog)
+blogRouter.delete('/delete-blog/:slug', controller.delete_blog)
 
 blogRouter.get('/get-blog/:slug', controller.get_blog)
 

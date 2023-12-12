@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import User from '../models/user.js'
 
 const signToken = ({id:id,isAdmin:isAdmin}) => {
@@ -36,5 +36,14 @@ export const login = async (req,res)=>{
         res.status(201).json({user,token})
     }catch(err){
         res.status(400).json(err)
+    }
+}
+
+export const get_users = async(req,res) =>{
+    try {
+        const users = await User.find()
+        res.json(users)
+    } catch (err) {
+        res.json(err.message)
     }
 }

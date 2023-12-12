@@ -5,9 +5,12 @@ const comment = new mongoose.Schema({
         type: String,
         required: true
     },
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
+    blog:{
+        type: mongoose.Schema.Types.ObjectId
+    },
+    user:{
+        type: String,
+        required: true
     }
 }, {timestamps: true})
 

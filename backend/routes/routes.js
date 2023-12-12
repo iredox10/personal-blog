@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.post('/create-category', controller.create_category)
 
-router.patch('/update-category/:slug', controller.update_category)
+router.patch('/edit-category/:slug', controller.update_category)
 
 router.delete('/delete-category/:slug', controller.delete_category)
 

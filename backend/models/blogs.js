@@ -26,7 +26,11 @@ const blog = new mongoose.Schema({
     // category: {
     //     type: mongoose.Schema.Types.ObjectId,
     //     ref: 'category',
-    // }
+    // },
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'comment'
+    }]
 }, {timestamps: true})
 
 blog.pre('save', function(){

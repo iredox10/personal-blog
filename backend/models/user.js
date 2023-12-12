@@ -17,7 +17,11 @@ const user = new mongoose.Schema({
     isAdmin:{
         type: Boolean,
         default: false
-    }
+    },
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'comment'
+    }]
 },{timestamp: true})
 
 const User = mongoose.model('user', user)
