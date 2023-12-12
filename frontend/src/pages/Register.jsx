@@ -4,6 +4,9 @@ import FormInput from '../components/FormInput';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import FormBtn from '../components/FormBtn';
+import path from '../../utils/path';
+import {useNavigate} from 'react-router-dom'
+import axios from 'axios';
 
 export const Register = () => {
 
@@ -11,9 +14,27 @@ export const Register = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
+    const [errMsg, setErrMsg] = useState('')
 
-    const handleSubmit = () =>{
+    const navigate = useNavigate()
 
+    const handleSubmit =async (e) =>{
+      e.preventDefault()
+      if(!fullName || !username || !password || !repeatPassword){
+        setErrMsg('please fill all the fields')
+        return
+      }
+      if(password !== repeatPassword){
+        setErrMsg('password did not match')
+        return
+      }
+      try {
+        const res = await axios.post(`${path}/user/sign-up`, {username,fullName,password})
+        console.log(res.data)
+        res.status == 201 && navigate('/')
+      } catch (err) {
+        console.log(err)
+      }
     }
 
    return (
@@ -25,13 +46,15 @@ export const Register = () => {
              Register
            </h1>
          </div>
-         <form action={handleSubmit}>
+         <form onSubmit={handleSubmit}>
+          {errMsg && <p>{errMsg}</p>}
            <FormInput
              labelName={"full Name"}
              labelFor={"fullName"}
              type={"text"}
              name={"fullName"}
              Id={"fullName"}
+             onchange={(e) => setFullName(e.target.value)}
            />
            <FormInput
              labelName={"username"}
@@ -39,6 +62,7 @@ export const Register = () => {
              type={"text"}
              name={"username"}
              Id={"username"}
+             onchange={(e) => setUsername(e.target.value)}
            />
            <FormInput
              labelName={"password"}
@@ -46,6 +70,7 @@ export const Register = () => {
              type={"password"}
              name={"password"}
              Id={"password"}
+             onchange={(e) => setPassword(e.target.value)}
            />
            <FormInput
              labelName={"Repeat Password"}
@@ -53,6 +78,7 @@ export const Register = () => {
              type={"password"}
              name={"repeatPassword"}
              Id={"repeatPassword"}
+             onchange={(e) => setRepeatPassword(e.target.value)}
            />
            <FormBtn text={"register"} />
            <p className="text-secondary-color">

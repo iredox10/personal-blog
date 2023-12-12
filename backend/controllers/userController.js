@@ -26,11 +26,13 @@ export const login = async (req,res)=>{
     try{
         const user = await User.findOne({username:req.body.username})
         if(!user){
-            throw new Error('User not found')
+            res.status(404).json('user not found')
+            return
         }
         const isMatch = await bcrypt.compare(req.body.password, user.password)
         if(!isMatch){
-            throw new Error('Incorrect password')
+            res.status(403).json('password not correct')
+            return
         }
         const token = signToken(user._id,user.isAdmin)
         res.status(201).json({user,token})
